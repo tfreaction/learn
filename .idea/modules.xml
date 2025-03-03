@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/netlearn/netlearn.iml" filepath="$PROJECT_DIR$/netlearn/netlearn.iml" />
       <module fileurl="file://$PROJECT_DIR$/threadlearn.iml" filepath="$PROJECT_DIR$/threadlearn.iml" />
     </modules>
   </component>
