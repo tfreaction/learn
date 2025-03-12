@@ -1,4 +1,4 @@
-package demo05tcp3;
+package demo06tcp4;
 
 import java.io.DataInputStream;
 import java.io.InputStream;
