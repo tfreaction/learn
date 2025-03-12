@@ -1,30 +1,30 @@
 package demo06tcp4;
 
-import java.io.DataInputStream;
-import java.io.InputStream;
+
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.*;
 
 /**
  * @author : [wswen]
  * @description : [一句话描述该类的功能]
  */
-public class TCPSeverDemo1 {
+public class TCPSeverDemo {
     public static void main(String[] args) throws Exception {
-        // 目标：通过多线程实现多个和多个客户端通信，服务端多发多收，实现基本的TCP通信
+        // 目标：BS架构的原理理解
         System.out.println("服务器启动了...");
         // 1. 创建服务端的ServerSocket对象
-        ServerSocket ss = new ServerSocket(8888);
+        ServerSocket ss = new ServerSocket(8080);//建议使用8080端口
+
+        // 创建线程池
+        ExecutorService pool = new ThreadPoolExecutor(3,10,10,
+                TimeUnit.SECONDS,
+                new ArrayBlockingQueue<>(100), Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
         while (true) {
             // 2. 获取客户端的Socket对象
             Socket socket = ss.accept();
-            // 3. 创建线程对象
-            ServerReader serverReader = new ServerReader(socket);
-            // 4. 启动线程
-            serverReader.start();
-            System.out.println("客户端连接了..." + socket.getInetAddress().getHostAddress());
+            // 3. 把客户端管道包装成一个任务，交给线程池处理
+            pool.execute(new ServerReaderRunnable(socket));
         }
-
-
     }
 }
